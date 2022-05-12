@@ -1,6 +1,5 @@
 package br.com.wellinsongabriel.jokenpo;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView imgEscolhaSmartphone, imgPedra, imgPapel, imgTesoura, imgEscolhaUsuario;
+    ImageView imgEscolhaSmartphone, imgPedra, imgPapel, imgTesoura, imgEscolhaUsuario, imgReiniciar;
     String jogadaSmartphone, jogadaUsuario;
     TextView txtPontuacaoSmartphone, txtPontuacaoUsuario, txtInformacao;
     int pontuacaoMaquina=0;
@@ -26,9 +25,12 @@ public class MainActivity extends AppCompatActivity {
         imgPapel = findViewById(R.id.imgPapel);
         imgTesoura = findViewById(R.id.imgTesoura);
         imgEscolhaUsuario = findViewById(R.id.imgEscolhaUsuario);
+        imgReiniciar = findViewById(R.id.imgReiniciar);
         txtPontuacaoSmartphone = findViewById(R.id.txtPontuacaoSmartphone);
         txtPontuacaoUsuario = findViewById(R.id.txtPontuacaoUsuario);
         txtInformacao = findViewById(R.id.txtInformacao);
+        txtPontuacaoSmartphone.setText(String.valueOf(pontuacaoMaquina));
+        txtPontuacaoUsuario.setText(String.valueOf(pontuacaoUsuario));
     }
 
     public void pedra(View view){
@@ -52,12 +54,11 @@ public class MainActivity extends AppCompatActivity {
         pontuar();
     }
 
-    private String jogadaMaquina(){
+    private void jogadaMaquina(){
         String[] jogada = {"pedra", "papel", "tesoura"};
         int i = new Random().nextInt(3);
         jogadaSmartphone = jogada[i];
         setarImagemMaquina(jogada[i]);
-        return jogada[i];
     }
     private void setarImagemMaquina(String jogadda){
         if(jogadda.equals("pedra")){
@@ -101,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
                     verificar();
                 }
             }
-            txtPontuacaoSmartphone.setText("" + pontuacaoMaquina);
-            txtPontuacaoUsuario.setText("" + pontuacaoUsuario);
+            txtPontuacaoSmartphone.setText(String.valueOf(pontuacaoMaquina));
+            txtPontuacaoUsuario.setText(String.valueOf(pontuacaoUsuario));
         }
 
 
@@ -110,28 +111,48 @@ public class MainActivity extends AppCompatActivity {
     private void verificar(){
         if(pontuacaoMaquina<5&&pontuacaoUsuario<5) {
             if(pontuacaoUsuario>pontuacaoMaquina){
-                txtInformacao.setText("Você, humano ganhou");
+                txtInformacao.setText("Você humano, ganhou!");
             }else{
                 txtInformacao.setText("Eu smartphone ganhei!");
 
             }
         }else{
-            if(pontuacaoUsuario>pontuacaoMaquina){;
-                txtInformacao.setText("Parabéns humano");
+            if(pontuacaoUsuario>pontuacaoMaquina){
+                txtInformacao.setText("Parabéns humano!");
             }else{
-                txtInformacao.setText("Bip bip! Eu sou o melhor");
+                txtInformacao.setText("Bip bip! Eu sou o melhor!");
 
             }
-            txtPontuacaoSmartphone.setText("" + pontuacaoMaquina);
-            txtPontuacaoUsuario.setText("" + pontuacaoUsuario);
-            imgEscolhaUsuario.setImageResource(R.drawable.padrao);
-            imgEscolhaSmartphone.setImageResource(R.drawable.padrao);
+            txtPontuacaoSmartphone.setText(String.valueOf(pontuacaoMaquina));
+            txtPontuacaoUsuario.setText(String.valueOf(pontuacaoUsuario));
+            //imgEscolhaUsuario.setImageResource(R.drawable.padrao);
+            //imgEscolhaSmartphone.setImageResource(R.drawable.padrao);
             imgPedra.setImageResource(R.drawable.padrao);
             imgPedra.setClickable(false);
             imgPapel.setImageResource(R.drawable.padrao);
             imgPapel.setClickable(false);
             imgTesoura.setImageResource(R.drawable.padrao);
             imgTesoura.setClickable(false);
+            imgReiniciar.setVisibility(View.VISIBLE);
+            imgReiniciar.setClickable(true);
         }
     }
+
+    public void reiniciar(View view){
+        imgEscolhaSmartphone.setImageResource(R.drawable.padrao);
+        imgEscolhaUsuario.setImageResource(R.drawable.padrao);
+        imgPedra.setImageResource(R.drawable.pedra);
+        imgPedra.setClickable(true);
+        imgPapel.setImageResource(R.drawable.papel);
+        imgPapel.setClickable(true);
+        imgTesoura.setImageResource(R.drawable.tesoura);
+        imgTesoura.setClickable(true);
+        imgReiniciar.setVisibility(View.INVISIBLE);
+        imgReiniciar.setClickable(false);
+        pontuacaoMaquina = 0;
+        pontuacaoUsuario = 0;
+        txtPontuacaoSmartphone.setText(String.valueOf(pontuacaoMaquina));
+        txtPontuacaoUsuario.setText(String.valueOf(pontuacaoUsuario));
+    }
+
 }
